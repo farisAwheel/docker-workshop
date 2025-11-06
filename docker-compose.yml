@@ -1,4 +1,16 @@
 services:
+  frontend:
+    build: ./frontend # location of Dockerfile
+    ports:
+      - "5173:5173" # port to open
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
   db:
     image: postgres:15
     environment:
@@ -8,7 +20,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/postgres_data
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
